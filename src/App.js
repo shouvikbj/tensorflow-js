@@ -31,10 +31,12 @@ function App() {
       const video = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
       const videoHeight = webcamRef.current.video.videoHeight;
+      const facingMode = webcamRef.current.video.facingMode;
 
       // Set video width
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videoHeight;
+      webcamRef.current.video.facingMode = "environment";
 
       // Set canvas height and width
       canvasRef.current.width = videoWidth;
@@ -59,6 +61,7 @@ function App() {
         <Webcam
           ref={webcamRef}
           muted={true}
+          videoConstraints={{ facingMode: "environment" }}
           style={{
             position: "absolute",
             marginLeft: "auto",
