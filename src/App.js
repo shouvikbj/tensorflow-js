@@ -14,10 +14,14 @@ function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
+  var toDetect = "";
+
   // Main function
   const runCoco = async () => {
     const net = await cocossd.load();
     console.log("Handpose model loaded.");
+    // take input to alert when that object is detected
+    toDetect = prompt("For which object should we alert you? ", "");
     //  Loop and detect hands
     setInterval(() => {
       detect(net);
@@ -52,7 +56,7 @@ function App() {
       drawRect(obj, ctx);
       var detections = obj;
       detections.forEach((prediction) => {
-        if (prediction["class"] === "cell phone") {
+        if (prediction["class"] === toDetect) {
           playAlertSound(alertSound);
         }
       });
