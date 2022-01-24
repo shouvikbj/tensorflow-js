@@ -5,6 +5,10 @@ import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
 import "./App.css";
 import { drawRect } from "./utilities";
+import { Howl } from "howler";
+
+// importing the audio
+import alertSound from "./audioclips/sound.mp3";
 
 function App() {
   const webcamRef = useRef(null);
@@ -46,7 +50,21 @@ function App() {
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
       drawRect(obj, ctx);
+      var detections = obj;
+      detections.forEach((prediction) => {
+        if (prediction["class"] === "cell phone") {
+          playAlertSound(alertSound);
+        }
+      });
     }
+  };
+
+  const playAlertSound = (soundSrc) => {
+    var sound = new Howl({
+      src: soundSrc,
+      volume: 1.0,
+    });
+    sound.play();
   };
 
   useEffect(() => {
